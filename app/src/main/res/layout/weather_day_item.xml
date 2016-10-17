@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:layout_gravity="center"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/weekday_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Mon" />
+
+    <ImageView
+        android:id="@+id/weekday_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/icon_sad" />
+
+    <LinearLayout
+        android:id="@+id/temperatures_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/weekday_temperature_low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="24°" />
+
+        <View
+            style="@style/divider_horizontal"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp" />
+
+        <TextView
+            android:id="@+id/weekday_temperature_high"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="34°" />
+
+    </LinearLayout>
+
+</LinearLayout>
