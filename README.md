@@ -14,3 +14,7 @@ When you acquire the appId, create a resource file in `app/src/main/res/values/k
 </resources>
 
 ```
+
+## Screenshot
+
+<img src="Screenshot.png" alt="Drawing" width=320/>
