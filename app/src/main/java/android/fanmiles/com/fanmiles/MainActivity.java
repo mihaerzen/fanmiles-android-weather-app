@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String OPEN_WEATHER_APP_ID = "";
     private SearchView mSearchView;
+    private int searchPlateId;
 
     private TextView mActiveCityNameTextView;
     private TextView mCurrentTemperatureTextView;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         OPEN_WEATHER_APP_ID = getResources().getString(R.string.OPEN_WEATHER_APP_ID);
 
         mSearchView = (SearchView) findViewById(R.id.search);
+        searchPlateId = getResources().getIdentifier("android:id/search_plate", null, null);
 
         mActiveCityNameTextView = (TextView) findViewById(R.id.active_city_name);
         mCurrentTemperatureTextView = (TextView) findViewById(R.id.temperature_current);
@@ -78,9 +81,30 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void showProgress() {
+        View progressBar = mSearchView.findViewById(searchPlateId).findViewById(R.id.search_progress_bar);
+        if (progressBar != null) {
+            progressBar.animate().setDuration(200).alpha(1).start();
+        } else {
+            View v = LayoutInflater.from(MainActivity.this).inflate(R.layout.loading_icon, null);
+            ((ViewGroup) mSearchView.findViewById(searchPlateId)).addView(v, 1);
+        }
+    }
+
+    private void hideProgress() {
+        View progressBar = mSearchView.findViewById(searchPlateId).findViewById(R.id.search_progress_bar);
+        if (progressBar != null) {
+            progressBar.animate().setDuration(200).alpha(0).start();
+        }
+    }
 
     private class FetchWeatherForecastTask extends AsyncTask<String, Void, ArrayList<WeatherDay>> {
+        protected void onPreExecute() {
+            showProgress();
+        }
+
         protected ArrayList doInBackground(String... queries) {
+
             String query = queries[0];
 
             ArrayList<WeatherDay> days = new ArrayList<>();
@@ -201,11 +225,14 @@ public class MainActivity extends AppCompatActivity {
 
                 weekdaysLayout.addView(weatherDayItem);
             }
+
+            hideProgress();
         }
 
         Toast toastReference;
+
         private void displayToast(String text) {
-            if(toastReference != null){
+            if (toastReference != null) {
                 toastReference.cancel();
             }
             toastReference = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
